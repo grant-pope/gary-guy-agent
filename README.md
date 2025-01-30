@@ -1,7 +1,7 @@
 # 🤖 AI AGENTS FOR TRADING
 
 <p align="center">
-  <a href="https://www.moondev.com/"><img src="moondev.png" width="300" alt="Moon Dev"></a>
+  <a href="https://x.com/DeluxGp/"><img src="garyguy.png" width="300" alt="Gary Guy"></a>
 </p>
 
 This project explores the potential of [artificial financial intelligence](https://www.afi.xyz) - a focused implementation of AI for trading and investing research.

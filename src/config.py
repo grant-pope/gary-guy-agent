@@ -29,7 +29,7 @@ tokens_to_trade = MONITORED_TOKENS  # Using the same list for trading
 
 # Token and wallet settings
 symbol = '9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump'
-address = '4wgfCBf2WwLSRKLef9iW7JXZ2AfkxUxGM4XcKpHm3Sin' # YOUR WALLET ADDRESS HERE
+address = 'GpJwBiwKs6e9sW6FeYdLLtWGpqfvgVAW6EEeJkmqNDv4' # Solflare wallet
 
 # Position sizing 🎯
 usd_size = 25  # Size of position to hold
