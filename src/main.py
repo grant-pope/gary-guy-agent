@@ -1,5 +1,5 @@
 """
-🌙 Moon Dev's AI Trading System
+🌙 Gary Guy's AI Trading System
 Main entry point for running trading agents
 """
 

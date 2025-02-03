@@ -183,3 +183,8 @@ Past performance is not indicative of future results. There is no guarantee that
 **CFTC Disclaimer:** Commodity Futures Trading Commission (CFTC) regulations require disclosure of the risks associated with trading commodities and derivatives. There is a substantial risk of loss in trading and investing.
 
 I am not a licensed financial advisor or a registered broker-dealer. Content & code is based on personal research perspectives and should not be relied upon as a guarantee of success in trading.
+
+
+## Gary Guy exclusive
+   - I use https://github.com/mufeedvh/code2prompt to generate prompts for better understanding of the code.
+   - Check how to use: https://github.com/mufeedvh/code2prompt?tab=readme-ov-file#usage
