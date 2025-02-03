@@ -188,3 +188,10 @@ I am not a licensed financial advisor or a registered broker-dealer. Content & c
 ## Gary Guy exclusive
    - I use https://github.com/mufeedvh/code2prompt to generate prompts for better understanding of the code.
    - Check how to use: https://github.com/mufeedvh/code2prompt?tab=readme-ov-file#usage
+
+
+To pull changes from the original repo:
+1. git fetch upstream
+2. git checkout main
+3. git merge upstream/main
+4. git push origin main
