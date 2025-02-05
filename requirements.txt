@@ -1,11 +1,10 @@
 fastapi==0.109.0
 uvicorn==0.25.0
-python-multipart==0.0.6
 jinja2==3.1.2
-python-dotenv==1.0.0
+python-multipart==0.0.6
 requests==2.31.0
 PyPDF2==3.0.0
-pandas==2.1.0
+pandas>=1.5.0
 termcolor==2.3.0
 numpy==1.24.0
 pandas-ta==0.3.14b0
@@ -18,4 +17,6 @@ groq==0.16.0  # Moon Dev's Groq API integration 🚀
 selenium>=4.16.0
 pillow>=10.2.0
 webdriver-manager>=4.0.1
+backtesting>=0.3.3
+TA-Lib>=0.4.24
 # Add any other dependencies your agents need

@@ -82,7 +82,7 @@ src/data/sentiment
 src/data/focus_history.csv
 src/data/discovered_tokens.csv
 src/data/ai_analysis.csv
-src/frontend
+
 # add this to gitignor /Users/md/Dropbox/dev/github/moon-dev-ai-agents-for-trading/src/data
 
 /src/data/ai_analysis_buys.csv
@@ -100,9 +100,11 @@ src/audio
 # Project specific
 src/data/chat_agent/chat_history.csv
 src/data/chat_agent/config.json
+
 *.env
 .env.*
 !.env_example
+.cursorrules
 
 # Moon Dev specific
 **/chat_history*.csv
@@ -111,8 +113,7 @@ src/data/chat_agent/config.json
 
 # Add prompt log to gitignore
 src/data/chat_agent/prompt_log.txt
-src/frontend
 
 # Also add the directory in case it doesn't exist yet
 src/data/chat_agent/*.txt
-src/data/code_runner/screenshots
+src/data/code_runner/screenshotssrc/frontend/

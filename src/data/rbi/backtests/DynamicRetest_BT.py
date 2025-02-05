@@ -2,7 +2,7 @@
 """
 Moon Dev's Backtest AI 🌙 – Dynamic Retest Strategy Backtesting & Optimization
 ---------------------------------------------------------------------
-This script implements the “Dynamic Retest” strategy using backtesting.py.
+This script implements the "Dynamic Retest" strategy using backtesting.py.
 It includes:
   • All necessary imports
   • Strategy class with TA‑Lib indicator wrap via self.I()
@@ -13,10 +13,10 @@ It includes:
 
 Data cleaning details:
   ‣ Cleans column names by stripping spaces and lowercasing names.
-  ‣ Drops any columns with “unnamed” in the name.
-  ‣ Renames columns to “Open”, “High”, “Low”, “Close”, “Volume”
+  ‣ Drops any columns with "unnamed" in the name.
+  ‣ Renames columns to "Open", "High", "Low", "Close", "Volume"
   
-Charts are saved to the specified “charts” directory with Moon Dev themed file names.
+Charts are saved to the specified "charts" directory with Moon Dev themed file names.
 Enjoy the ride, and may the Moon Dev vibes guide you! 🌙✨🚀
 """
 
@@ -34,12 +34,12 @@ class DynamicRetest(Strategy):
     # risk_reward: effective risk/reward ratio = self.risk_reward / 10 (default 25 -> 2.5:1)
     # risk_percent: effective risk per trade = self.risk_percent / 100 (default 1 -> 1% of equity)
     # consolidation_span: number of bars used for zone determination (default 3)
-    risk_reward = 25      # Optimize in range(25, 31, 1) i.e. 2.5:1 to 3.0:1
+    risk_reward = 15      # Optimize in range(25, 31, 1) i.e. 2.5:1 to 3.0:1
     risk_percent = 1      # Optimize in range(1, 3, 1) i.e. 1% to 2%
     consolidation_span = 3  # Optimize in range(2, 6)
 
     def init(self):
-        # Use TA-Lib’s functions wrapped with self.I for any indicator/calculation!
+        # Use TA-Lib's functions wrapped with self.I for any indicator/calculation!
         # Swing high (zone top) & swing low (zone bottom) over consolidation_span bars.
         self.zone_top = self.I(talib.MAX, self.data.High, timeperiod=self.consolidation_span)
         self.zone_bottom = self.I(talib.MIN, self.data.Low, timeperiod=self.consolidation_span)
@@ -89,31 +89,33 @@ class DynamicRetest(Strategy):
         # LONG (BUY) Trade Logic – For Uptrend & Demand zone retest
         # ===============================
         if trend == 'up' and current_close > current_open:
-            # Check that the current price is within our defined demand zone (zone boundaries)
-            if curr_zone_bottom < current_close <= curr_zone_top:
-                risk = current_close - curr_zone_bottom  # Risk per unit for a long trade
+            # Check that the current price is within our defined demand zone
+            if curr_zone_bottom <= current_close <= curr_zone_top:
+                risk = current_close - curr_zone_bottom  # Risk per unit
                 if risk <= 0:
                     print("🚀 Moon Dev: Calculated risk for LONG trade is non-positive. Skipping... ")
                     return
-                if eff_risk_reward < 2.5:
-                    print("✨ Moon Dev: Effective risk/reward ratio below 2.5:1 for LONG. Aborting trade!")
-                    return
+                
+                # Remove the minimum risk/reward check since we're using the parameter value
                 potential_reward = risk * eff_risk_reward
                 take_profit = current_close + potential_reward
 
-                # Validate that the recent high (over the consolidation span) is high enough to reach our TP target.
-                recent_high = self.data.High[-self.consolidation_span:].max()
-                if recent_high < take_profit:
-                    print(f"🚀 Moon Dev: Recent high ({recent_high:.2f}) is below desired TP ({take_profit:.2f}). LONG trade skipped!")
+                # Relax the TP validation - only check if it's within 2x the recent range
+                recent_range = self.data.High[-self.consolidation_span:].max() - self.data.Low[-self.consolidation_span:].min()
+                if take_profit > current_close + (2 * recent_range):
+                    print(f"🚀 Moon Dev: TP target ({take_profit:.2f}) too far from current price. LONG trade skipped!")
                     return
 
-                # Calculate dynamic position size based on risk percentage
+                # Calculate position size based on risk amount
                 risk_amount = self.equity * eff_risk_percent
-                position_size = risk_amount / risk  # units to trade
+                position_size = risk_amount / risk  # Calculate raw position size
+                position_size = max(1.0, position_size)  # Ensure minimum size of 1.0
+                position_size = int(position_size)  # Convert to whole number of units
+
                 # Set stop loss just below the demand zone (a slight buffer)
                 stop_loss = curr_zone_bottom * 0.999
 
-                print(f"🌙🚀 Moon Dev: LONG signal detected! Entry = {current_close:.2f}, Stop Loss = {stop_loss:.2f}, Take Profit = {take_profit:.2f}, Size = {position_size:.4f}")
+                print(f"🌙🚀 Moon Dev: LONG signal detected! Entry = {current_close:.2f}, Stop Loss = {stop_loss:.2f}, Take Profit = {take_profit:.2f}, Size = {position_size}")
                 self.buy(size=position_size, sl=stop_loss, tp=take_profit)
                 return
 
@@ -122,29 +124,32 @@ class DynamicRetest(Strategy):
         # ===============================
         if trend == 'down' and current_close < current_open:
             # Check that the current price is within our defined supply zone
-            if curr_zone_bottom <= current_close < curr_zone_top:
+            if curr_zone_bottom <= current_close <= curr_zone_top:
                 risk = curr_zone_top - current_close  # Risk per unit for a short trade
                 if risk <= 0:
                     print("🚀 Moon Dev: Calculated risk for SHORT trade is non-positive. Skipping... ")
                     return
-                if eff_risk_reward < 2.5:
-                    print("✨ Moon Dev: Effective risk/reward ratio below 2.5:1 for SHORT. Aborting trade!")
-                    return
+                
+                # Remove the minimum risk/reward check since we're using the parameter value
                 potential_reward = risk * eff_risk_reward
                 take_profit = current_close - potential_reward
 
-                # Ensure that the recent low is low enough to allow our target hit
-                recent_low = self.data.Low[-self.consolidation_span:].min()
-                if recent_low > take_profit:
-                    print(f"🚀 Moon Dev: Recent low ({recent_low:.2f}) is above desired TP ({take_profit:.2f}). SHORT trade skipped!")
+                # Relax the TP validation - only check if it's within 2x the recent range
+                recent_range = self.data.High[-self.consolidation_span:].max() - self.data.Low[-self.consolidation_span:].min()
+                if take_profit < current_close - (2 * recent_range):
+                    print(f"🚀 Moon Dev: TP target ({take_profit:.2f}) too far from current price. SHORT trade skipped!")
                     return
 
+                # Calculate position size based on risk amount
                 risk_amount = self.equity * eff_risk_percent
-                position_size = risk_amount / risk  # units to trade
+                position_size = risk_amount / risk  # Calculate raw position size
+                position_size = max(1.0, position_size)  # Ensure minimum size of 1.0
+                position_size = int(position_size)  # Convert to whole number of units
+
                 # Place stop loss just above the supply zone, with a small buffer
                 stop_loss = curr_zone_top * 1.001
 
-                print(f"🌙🚀 Moon Dev: SHORT signal detected! Entry = {current_close:.2f}, Stop Loss = {stop_loss:.2f}, Take Profit = {take_profit:.2f}, Size = {position_size:.4f}")
+                print(f"🌙🚀 Moon Dev: SHORT signal detected! Entry = {current_close:.2f}, Stop Loss = {stop_loss:.2f}, Take Profit = {take_profit:.2f}, Size = {position_size}")
                 self.sell(size=position_size, sl=stop_loss, tp=take_profit)
                 return
 
@@ -191,42 +196,66 @@ print("🌙✨ Moon Dev: Data cleaning complete. Columns available:", list(data.
 # Initialize and Run Initial Backtest
 # ----------------------------
 print("🚀🌙 Moon Dev: Initial backtest starting with Dynamic Retest strategy!")
-bt = Backtest(data, 
-              DynamicRetest,
-              cash=1000000,      # Your size should be 1,000,000!
-              commission=0.0,    # Set commission to 0 or adjust as desired
-              exclusive_orders=True)
+try:
+    bt = Backtest(data, 
+                DynamicRetest,
+                cash=1000000,      # Your size should be 1,000,000!
+                commission=0.0,    # Set commission to 0 or adjust as desired
+                exclusive_orders=True)
 
-stats = bt.run()
-print("🌙✨ Moon Dev: Initial Backtest Stats:")
-print(stats)
-print("🌙✨ Moon Dev: Strategy Parameters:")
-print(stats._strategy)
+    stats = bt.run()
+    print("\n" + "="*50)
+    print("🌙✨ MOON DEV BACKTEST RESULTS 🚀")
+    print("="*50)
+    print(f"Return [%]: {stats['Return [%]']:.2f}")
+    print(f"Buy & Hold Return [%]: {stats['Buy & Hold Return [%]']:.2f}")
+    print(f"Max. Drawdown [%]: {stats['Max. Drawdown [%]']:.2f}")
+    print(f"Avg. Trade [%]: {stats['Avg. Trade [%]']:.2f}")
+    print(f"Win Rate [%]: {stats['Win Rate [%]']:.2f}")
+    print(f"# Trades: {stats['# Trades']}")
+    print(f"Profit Factor: {stats['Profit Factor']:.2f}")
+    print(f"Sharpe Ratio: {stats['Sharpe Ratio']:.2f}")
+    print(f"Sortino Ratio: {stats['Sortino Ratio']:.2f}")
+    print(f"Calmar Ratio: {stats['Calmar Ratio']:.2f}")
+    print("="*50 + "\n")
 
-# Save initial performance plot to charts directory
-strategy_name = "Dynamic_Retest"
-chart_dir = "/Users/md/Dropbox/dev/github/moon-dev-ai-agents-for-trading/src/data/rbi/charts"
-chart_file = os.path.join(chart_dir, f"{strategy_name}_chart.html")
-print(f"🚀 Moon Dev: Saving initial performance plot to {chart_file}")
-bt.plot(filename=chart_file, open_browser=False)
+    print("🌙✨ Moon Dev: Strategy Parameters:")
+    print(stats._strategy)
 
-# ----------------------------
-# Run Parameter Optimization
-# ----------------------------
-print("🌙✨ Moon Dev: Starting parameter optimization…")
-optimized_stats = bt.optimize(risk_reward=range(25, 31, 1),          # Effective risk_reward: 2.5:1 to 3.0:1
-                              risk_percent=range(1, 3, 1),            # 1% to 2% risk per trade
-                              consolidation_span=range(2, 6),         # Consolidation span from 2 to 5 bars
-                              maximize='Equity Final [$]',
-                              return_heatmap=False)
+    # Save initial performance plot to charts directory
+    strategy_name = "Dynamic_Retest"
+    chart_dir = "/Users/md/Dropbox/dev/github/moon-dev-ai-agents-for-trading/src/data/rbi/charts"
+    os.makedirs(chart_dir, exist_ok=True)  # Ensure directory exists
+    chart_file = os.path.join(chart_dir, f"{strategy_name}_chart.html")
+    print(f"🚀 Moon Dev: Saving initial performance plot to {chart_file}")
+    bt.plot(filename=chart_file, open_browser=False)
 
-print("🌙🚀 Moon Dev: Optimization complete!")
-print("🌙✨ Moon Dev: Optimized Stats:")
-print(optimized_stats)
+    # ----------------------------
+    # Run Parameter Optimization
+    # ----------------------------
+    print("\n🌙✨ Moon Dev: Starting parameter optimization…")
+    # optimized_stats = bt.optimize(risk_reward=range(25, 31, 1),          # Effective risk_reward: 2.5:1 to 3.0:1
+    #                             risk_percent=range(1, 3, 1),            # 1% to 2% risk per trade
+    #                             consolidation_span=range(2, 6),         # Consolidation span from 2 to 5 bars
+    #                             maximize='Equity Final [$]',
+    #                             return_heatmap=False)
 
-# Save optimized performance plot
-opt_chart_file = os.path.join(chart_dir, f"{strategy_name}_optimized_chart.html")
-print(f"🚀 Moon Dev: Saving optimized performance plot to {opt_chart_file}")
-bt.plot(filename=opt_chart_file, open_browser=False)
+    # print("\n" + "="*50)
+    # print("🌙✨ MOON DEV OPTIMIZED RESULTS 🚀")
+    # print("="*50)
+    # print(f"Best Return [%]: {optimized_stats['Return [%]']:.2f}")
+    # print(f"Best Max. Drawdown [%]: {optimized_stats['Max. Drawdown [%]']:.2f}")
+    # print(f"Best Sharpe Ratio: {optimized_stats['Sharpe Ratio']:.2f}")
+    # print(f"Best Parameters: {optimized_stats._strategy}")
+    # print("="*50 + "\n")
+
+    # # Save optimized performance plot
+    # opt_chart_file = os.path.join(chart_dir, f"{strategy_name}_optimized_chart.html")
+    # print(f"🚀 Moon Dev: Saving optimized performance plot to {opt_chart_file}")
+    # bt.plot(filename=opt_chart_file, open_browser=False)
+
+except Exception as e:
+    print(f"❌ Error occurred: {str(e)}")
+    raise
 
 print("🌙✨ Moon Dev: All done! May the lunar gains be with you! 🚀")

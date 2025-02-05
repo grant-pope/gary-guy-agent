@@ -88,6 +88,8 @@ Project updates will be posted in discord, join here: [moondev.com](http://moond
 
 ### Shipped Features 📦
 
+- [x] 2/4 - code running agent is complete and put in the agents folder
+- [x] 2/3 - self executing now works, game changer
 - [x] 2/1 - working on getting a self executing ai agent to work with a debugger ai to be able to autonomosly improve my code and trading backtests
 - [x] 1/31 - added o3-mini to the model factory
 - [x] 1/31 - updated the chat agent, this is the agent i will use for all live streams to manage chat with ai

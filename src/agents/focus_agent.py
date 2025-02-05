@@ -59,7 +59,7 @@ SAMPLE_RATE = 16000
 
 # Schedule settings
 SCHEDULE_START = time(5, 0)  # 5:00 AM
-SCHEDULE_END = time(15, 0)   # 3:00 PM
+SCHEDULE_END = time(18, 0)   # 3:00 PM
 
 # Voice settings
 VOICE_MODEL = "tts-1"
@@ -416,7 +416,7 @@ class FocusAgent:
                 time_lib.sleep(interval)
                 
                 # Start recording
-                cprint("\n🎤 Recording sample...", "cyan")
+                #cprint("\n🎤 Recording sample...", "cyan")
                 self.record_audio()
                 
                 # Process recording if we got something

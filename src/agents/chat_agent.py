@@ -43,7 +43,7 @@ load_dotenv(dotenv_path=env_path)
 
 # Model override settings
 MODEL_TYPE = "groq"  # Using Claude for chat responses
-MODEL_NAME = "llama-3.3-70b-versatile"  # Fast, efficient model
+MODEL_NAME = "llama-3.1-8b-instant"  # Fast, efficient model llama-3.1-8b-instant
 
 # Configuration - All in one place! 🎯
 RESTREAM_CHECK_INTERVAL = 0.1  # Reduce to 100ms for more responsive chat
@@ -91,6 +91,7 @@ Frequently Asked Questions
 * what do points do? the person who gets the most points on the live stream gets the algo trade camp for free for a month
 * what is 777 peace and love. i believe you can have anything in this world if you lead with love, so while i share absolutely every line of code on youtube, i get a lot of negative energy thrown at me. its the only downside of sharing. sending a 777 is an easy way to send some good vibes to not only me, but everyone reading the comments. lead with love and kindness and you can have anything in this world. imo.
 * what is the best coding language to learn for algo trading?python because its the most widely used language, it isn’t too hard to learn and there are so many amazing tutorials and python packages to help you with your journey. once you learn python, learning a second language, if needed is not going to be that hard. i use 100% python in my systems.
+* how much is the course? how much is the bootcamp? how much is algo trade camp? we have a $69/mo subscription plan or you can get the lifetime for $420
 * will i get nq or futures data from the bootcamp? no, i show all crypto algo trading but trading is trading and you can adapt to any market.
 * where to learning coding for algo trading?i teach how to code in my algo trade camp here but you can also learn python on youtube
 * do you prefer trading crypto vs forex or stocks? why?i personally like crypto as i am a fan of decentralization but imo, markets are markets and algo trading can be done with futures, stocks, crypto, prediction markets & any other market that gives you api access
@@ -121,7 +122,7 @@ Frequently Asked Questions
 * can i have the bootcamp for free?We have many lengthy videos on our YouTube channel that need concise clips of the key points. To earn free access to the bootcamp, check out the clips channel in our Discord. There, you can learn how to study our YouTube videos and extract the most valuable segments.
 * can i pay for the bootcamp in crypto?yes, if you are looking to sign up for the lifetime package. unfortunately, there is no way to collect subscriptions in crypto so we do lifetime only. you can email moon@algotradecamp.com for the address to send crypto to set up your bootcamp account.
 * what is the thing you record your voice for text? what is the voice to text software yo uuse? its called flow pro it allows me to turn my voice to text to double my words per minute
-
+* whats your github? @moondevonyt
 User message to respond to with the above knowledge base: {question}
 """
 
@@ -640,7 +641,7 @@ class ChatAgent:
         4. If not negative and no ?, just display the message
         """
         # Add API key warning
-        if any(key_word in question.lower() for key_word in ['api', 'key', 'token', 'secret']):
+        if any(key_word in question.lower() for key_word in ['apixxx', 'keyxxx', 'tokenxxx', 'secretxxx']):
             return None
             
         retries = 0

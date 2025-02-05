@@ -113,9 +113,8 @@ Include:
 2. Strategy class with indicators
 3. Entry/exit logic
 4. Risk management
-5. Parameter optimization
-6. your size should be 1,000,000
-7. If you need indicators use TA lib or pandas TA. Do not use backtesting.py's indicators. 
+5. your size should be 1,000,000
+6. If you need indicators use TA lib or pandas TA. Do not use backtesting.py's indicators. 
 
 IMPORTANT DATA HANDLING:
 1. Clean column names by removing spaces: data.columns = data.columns.str.strip().str.lower()
@@ -123,10 +122,7 @@ IMPORTANT DATA HANDLING:
 3. Ensure proper column mapping to match backtesting requirements:
    - Required columns: 'Open', 'High', 'Low', 'Close', 'Volume'
    - Use proper case (capital first letter)
-4. When optimizing parameters:
-   - Never try to optimize lists directly
-   - Break down list parameters (like Fibonacci levels) into individual parameters
-   - Use ranges for optimization (e.g., fib_level_1=range(30, 40, 2))
+
 
 INDICATOR CALCULATION RULES:
 1. ALWAYS use self.I() wrapper for ANY indicator calculations
@@ -140,19 +136,9 @@ INDICATOR CALCULATION RULES:
 BACKTEST EXECUTION ORDER:
 1. Run initial backtest with default parameters first
 2. Print full stats using print(stats) and print(stats._strategy)
-3. Show initial performance plot
-4. Then run optimization
-5. Show optimized results and final plot
+3. no optimization code needed, just print the final stats, make sure full stats are printed, not just part or some. stats = bt.run() print(stats) is an example of the last line of code. no need for plotting ever.
 
-CHART OUTPUT:
-1. Import os at the top of the file
-2. Save charts to the charts directory:
-   ```python
-   # Save plots to charts directory
-   chart_file = os.path.join("/Users/md/Dropbox/dev/github/moon-dev-ai-agents-for-trading/src/data/rbi/charts", f"{strategy_name}_chart.html")
-   bt.plot(filename=chart_file, open_browser=False)
-   ```
-3. Do this for both initial and optimized plots
+do not creeate charts to plot this, just print stats. no charts needed.
 
 CRITICAL POSITION SIZING RULE:
 When calculating position sizes in backtesting.py, the size parameter must be either:
@@ -169,7 +155,6 @@ Example fix:
 RISK MANAGEMENT:
 1. Always calculate position sizes based on risk percentage
 2. Use proper stop loss and take profit calculations
-3. Include risk-reward ratio in optimization parameters
 4. Print entry/exit signals with Moon Dev themed messages
 
 If you need indicators use TA lib or pandas TA. Do not use backtesting.py's indicators. 
