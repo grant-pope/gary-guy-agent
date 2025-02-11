@@ -15,7 +15,6 @@ from termcolor import colored
 import logging
 from rich.console import Console
 from rich import print as rprint
-from playsound import playsound
 
 # Add src directory to Python path
 src_path = str(Path(__file__).parent.parent)
@@ -178,17 +177,6 @@ class TxScanner:
         for _, row in recent_txs.iterrows():
             self.display_past_transaction(row)
             
-    def play_sound(self):
-        """Play a random sound effect safely"""
-        if not self.sound_enabled:
-            return
-            
-        try:
-            sound_file = random.choice(SOUND_EFFECTS)
-            playsound(sound_file, block=False)
-        except Exception:
-            pass
-            
     def display_transaction(self, row):
         """Display a new transaction with sound"""
         try:
@@ -202,8 +190,7 @@ class TxScanner:
         
         display_link = self.get_display_link(row['birdeye_link'])
         
-        # Play sound and display with color
-        self.play_sound()
+        # Display with color
         print(f"\n{colored(f'{random_emoji} NEW TRANSACTION {time_str}', 'white', random_bg)} {display_link}")
         
         # Auto-open in browser if enabled

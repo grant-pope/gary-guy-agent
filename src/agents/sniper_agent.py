@@ -24,7 +24,6 @@ from pathlib import Path
 import logging
 from rich.console import Console
 from rich import print as rprint
-from playsound import playsound
 
 # Suppress INFO logs
 logging.getLogger().setLevel(logging.WARNING)
@@ -232,17 +231,6 @@ class TokenScanner:
                 row['Birdeye Link']
             )
             
-    def play_sound(self):
-        """Play a random sound effect safely"""
-        if not self.sound_enabled:
-            return
-            
-        try:
-            sound_file = random.choice(SOUND_EFFECTS)
-            playsound(sound_file, block=False)
-        except Exception:
-            pass
-            
     def display_token(self, address, time_found, birdeye_link, count=None):
         """Display a new token with animation"""
         try:
@@ -267,8 +255,7 @@ class TokenScanner:
             except Exception:
                 pass
         
-        # Play sound first, then do animation
-        self.play_sound()
+        # Do animation
         self.attention_animation()
         
     def monitor_new_launches(self):
