@@ -134,7 +134,7 @@ python 3.10.9 is what was used during dev
    - Monitor logs for performance
 
 ---
-*Built with love by Moon Dev - Pioneering the future of AI-powered trading*
+*Forked with love by Gary Guy*
 
 
 ## 📜 Detailed Disclaimer
@@ -154,6 +154,6 @@ I am not a licensed financial advisor or a registered broker-dealer. Content & c
 
 To pull changes from the original repo:
 1. git fetch upstream
-2. git checkout main
+2. git checkout main (or the branch you are using)
 3. git merge upstream/main
 4. git push origin main
