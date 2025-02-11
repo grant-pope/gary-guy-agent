@@ -4,15 +4,9 @@
   <a href="https://x.com/DeluxGp/"><img src="garyguy.png" width="300" alt="Gary Guy"></a>
 </p>
 
-## 🎯 Vision
-ai agents are clearly the future and the entire workforce will be replaced or atleast using ai agents. while i am a quant and building agents for algo trading i will be contributing to all different types of ai agent flows and placing all of the agents here for free, 100% open sourced because i beleive code is the great equalizer and we have never seen a regime shift like this so i need to get this code to the people
+## 🎯 Forked, with love
 
-feel free to join our discord if you beleive ai agents will be integrated into the workforce
-
-⭐️ [first full concise documentation video (watch here)](https://www.youtube.com/watch?v=So_LQVKa55c)
-
-## Video Updates & Training
-📀 follow all updates here on youtube: https://www.youtube.com/playlist?list=PLXrNVMjRZUJg4M4uz52iGd1LhXXGVbIFz
+Please see the original repo for more information: https://github.com/moondevonyt/moon-dev-ai-agents
 
 ## Live Agents
 - Trading Agent (`trading_agent.py`): Example agent that analyzes token data via LLM to make basic trade decisions
