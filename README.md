@@ -6,7 +6,9 @@
 
 ## 🎯 Forked, with love
 
-Please see the original repo for more information: https://github.com/moondevonyt/moon-dev-ai-agents
+Project updates will be posted in discord, join here: [moondev.com](http://moondev.com) 
+
+Please see the original repo for more information: [moon-dev-ai-agents](https://github.com/moondevonyt/moon-dev-ai-agents) 
 
 ## Live Agents
 - Trading Agent (`trading_agent.py`): Example agent that analyzes token data via LLM to make basic trade decisions
@@ -32,36 +34,12 @@ Please see the original repo for more information: https://github.com/moondevony
 - tx agent (`tx_agent.py`): watches transactions made by my copy list and then prints them out with an optional auto tab open
 - solana agent (`solana_agent.py`): looks at the sniper agent and the tx agent in order to select which memes may be interesting
 
-**⚠️ IMPORTANT: This is an experimental project. There are NO guarantees of profitability. Trading involves substantial risk of loss.**
-
 ## ⚠️ Critical Disclaimers
 
 *There is no token associated with this project and there never will be. any token launched is not affiliated with this project, moon dev will never dm you. be careful. don't send funds anywhere*
 
 **PLEASE READ CAREFULLY:**
 
-1. This is an experimental research project, NOT a trading system
-2. There are NO plug-and-play solutions for guaranteed profits
-3. We do NOT provide trading strategies
-4. Success depends entirely on YOUR:
-   - Trading strategy
-   - Risk management
-   - Market research
-   - Testing and validation
-   - Overall trading approach
-
-5. NO AI agent can guarantee profitable trading
-6. You MUST develop and validate your own trading approach
-7. Trading involves substantial risk of loss
-8. Past performance does not indicate future results
-
-## 👂 Looking for Updates?
-Project updates will be posted in discord, join here: [moondev.com](http://moondev.com) 
-
-## 🔗 Links
-- Free Algo Trading Roadmap: [moondev.com](https://moondev.com)
-- Algo Trading Education: [algotradecamp.com](https://algotradecamp.com)
-- Business Contact [moon@algotradecamp.com](mailto:moon@algotradecamp.com)
 
 ### Shipped Features 📦
 
