@@ -41,6 +41,8 @@ import time
 CODE_EDITOR_X = -2686
 CODE_EDITOR_Y = -1144
 
+# command 
+
 # Terminal coordinates
 TERMINAL_X = -2593
 TERMINAL_Y = -556
